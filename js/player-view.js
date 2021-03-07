@@ -249,9 +249,14 @@
             this.customButtons = document.createElement('div');
             this.customButtons.className = 'audio-player-buttons-container';
         
-            this.vidtitle = document.createElement("h2");
+            this.vidtitle = document.createElement("div");
             this.vidtitle.className = 'audio-player-video-title';
-            this.vidtitle.innerText = `${video_data.title}`; 
+            this.vidtitle.innerHTML = `
+            <div class="audio-player-video-title">
+            <div class="book-title" >${video_data.categories[0]}</div>
+            <div class="chapter-title" >${video_data.title}</div>
+            </div>
+            `; 
 
             this.customButtons.innerHTML +=`
             <button class="btns" id="rewindbtn"><img class="ImgBtns" src="assets/rewind.png"></button>
