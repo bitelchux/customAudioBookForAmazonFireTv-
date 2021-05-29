@@ -267,6 +267,7 @@
             <button class="btns" id="incspeed"><img class="ImgBtns"  src="assets/incspeed.png"></button>
            
             `;
+
             
             this.customContainer.append(this.thumbnailImage);
             this.customContainer.append(this.customButtons);
@@ -327,7 +328,11 @@
                         this.incspeed = document.getElementById("incspeed");
             
                         this.incspeed.addEventListener("click", this.customIncspeed);
-        };
+
+                        
+                        this.currentButton = document.getElementById("playbtn");
+                        this.currentButton.focus();
+                    };
 
         /**
          *  Start the video playing
@@ -442,20 +447,43 @@
                         break;
 
                     case buttons.SELECT:
+                        this.currentButton.click();
+                        break;
                     case buttons.PLAY_PAUSE:
-                        if (this.videoElement.paused) {
-                            this.resumeVideo();
+                        if (this.paused) {
+                            document.querySelector("#playPauseImg").src = "assets/pause.png";
+                            this.isSkipping = false;
+                            this.paused = false;
+        
+                            let vid = document.getElementsByClassName("player-content-video")[0];
+                            vid.play();
+        
+                     
                         } else {
-                            this.pauseVideo();
-                        }
+                            document.querySelector("#playPauseImg").src = "assets/play.png";
+                            this.isSkipping = false;
+                            this.paused = true;
+        
+                            let vid = document.getElementsByClassName("player-content-video")[0];
+                            vid.pause();
+        
+                        }                        // if (this.videoElement.paused) {
+                        //     this.resumeVideo();
+                        // } else {
+                        //     this.pauseVideo();
+                        // }
                         break;
                     case buttons.UP:
-                        this.controlsView.showAndHideControls();
+                        this.currentButton = this.currentButton.nextElementSibling == null ? this.currentButton :this.currentButton.nextElementSibling;
+                        this.currentButton.focus();
+                        // console.log(this.currentButton.nextElementSibling)
                         break;
                     case buttons.DOWN:
-                        if (!this.videoElement.paused) {
-                            this.controlsView.hide();
-                        }
+                        this.currentButton = this.currentButton.previousElementSibling == null ? this.currentButton :this.currentButton.previousElementSibling;
+                        this.currentButton.focus();
+                        // if (!this.videoElement.paused) {
+                        //     this.controlsView.hide();
+                        // }
                         break;
                 }
             } else if (e.type === 'buttonrepeat') {
